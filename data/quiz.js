@@ -1,0 +1,95 @@
+/* Quiz content data.
+   The single source of truth for all quiz text is data/quiz.json.
+   This file simply exposes that JSON to the page as `window.QUIZ_DATA`,
+   so the quiz works both when served over http(s) and when opened
+   directly from the filesystem (where fetch() of local files is blocked). */
+
+window.QUIZ_DATA = {
+  "meta": {
+    "title": "Email & Password Security Quiz",
+    "subtitle": "Test your everyday account security habits."
+  },
+  "questions": [
+    {
+      "id": "1",
+      "text": "How many email accounts do you use for your online activities?",
+      "answers": [
+        {
+          "text": "One email, which I use everywhere for convenience.",
+          "correct": false,
+          "lesson": "Using one email address everywhere increases your exposure to spam, phishing, and data breaches. If that address is compromised or widely shared, it can also make it harder to protect your important accounts."
+        },
+        {
+          "text": "Main email for important services, such as banking, work, and government services. A separate email for free trials, registrations, newsletters, forums, and random websites.",
+          "correct": true,
+          "lesson": "Using a primary email for important services and a separate email for lower-trust websites limits how widely your main address is exposed. This can reduce spam and help contain the impact of a data breach."
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "text": "Do you use multi-factor authentication (MFA) to protect your email account?",
+      "answers": [
+        {
+          "text": "Yes, I use MFA to protect my important accounts.",
+          "correct": true,
+          "lesson": "MFA adds another layer of protection even if someone manages to obtain your password. Whenever possible, enable MFA on important accounts such as email, banking, and work accounts."
+        },
+        {
+          "text": "No, I use only a password for faster logins and convenience.",
+          "correct": false,
+          "lesson": "A password alone can be stolen through phishing, malware, or a data breach. MFA provides an additional security check, making it much harder for someone to access your account with only your password."
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "text": "Where do you save all your passwords?",
+      "answers": [
+        {
+          "text": "In my head. I don't have many different passwords, so I reuse the same password across multiple accounts.",
+          "correct": false,
+          "lesson": "Reusing passwords means that one stolen password could give an attacker access to several of your accounts. Use a different strong password for every important account instead."
+        },
+        {
+          "text": "I use a password manager to securely store and manage my passwords.",
+          "correct": true,
+          "lesson": "A reputable password manager can securely store unique passwords so you do not have to remember them all. This makes it much easier to use strong, different passwords for every account."
+        },
+        {
+          "text": "In a text file saved on my computer.",
+          "correct": false,
+          "lesson": "A plain text file may expose all your passwords if someone gains access to your computer or the file. A reputable password manager provides dedicated security features for protecting and managing passwords."
+        },
+        {
+          "text": "On a piece of paper.",
+          "correct": false,
+          "lesson": "A piece of paper can be lost, stolen, photographed, or seen by someone else. A reputable password manager is generally a safer and more practical way to securely manage many unique passwords."
+        }
+      ]
+    }
+  ],
+  "learning": {
+    "ariaLabel": "Learning summary",
+    "title": "Email Account Security",
+    "intro": "When browsing the internet, avoid giving your <strong>primary email address</strong> to websites that you do not trust or that do not genuinely need it.",
+    "sections": [
+      {
+        "heading": "Main account:",
+        "body": "Use your normal email account for important services such as banking, work, government services, and personal accounts. Protect it with a <strong>unique, strong password</strong> and <strong>multi-factor authentication (MFA)</strong>."
+      },
+      {
+        "heading": "Separate email:",
+        "body": "Consider creating a secondary email address for lower-trust or less important activities, such as:",
+        "list": [
+          "Newsletters and mailing lists",
+          "Random websites",
+          "Free trials and registrations",
+          "Forums and online communities",
+          "Downloads and other one-time services"
+        ]
+      }
+    ],
+    "outro": "This separation helps <strong>reduce spam, limit exposure of your primary account, and contain the impact if a less-trusted website suffers a data breach</strong>."
+  }
+};
