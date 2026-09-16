@@ -165,20 +165,26 @@ body {
   background: var(--page-bg);
   background-attachment: fixed;
 
-  --header-h: 140px;
+  --header-h: 72px;
 }
 
 @media (max-width: 600px) {
-  body { --header-h: 120px; }
+  body { --header-h: 60px; }
 }
 
-/* Sticky header shown above every question slide */
+/* Compact sticky header shown above every question slide */
 .quiz-header {
   position: sticky;
   top: 0;
   z-index: 10;
 
-  padding: var(--space-4) var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: var(--header-h);
+  padding: var(--space-2) var(--space-4);
 
   background: var(--glass-bg);
   backdrop-filter: blur(var(--blur-lg));
@@ -188,11 +194,14 @@ body {
   text-align: center;
 }
 
-.quiz-header h1,
-.quiz-header .subtitle,
-.quiz-header .progress {
-  margin-left: auto;
-  margin-right: auto;
+.quiz-header h1 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+}
+
+.quiz-header .subtitle {
+  display: none; /* keep the header compact; subtitle isn't essential */
 }
 
 button {
@@ -240,11 +249,19 @@ h1 {
    ========================================================= */
 
 .progress {
-  width: fit-content;
-  margin: 0 auto var(--space-8);
+  position: fixed;
+  top: calc(var(--header-h) / 2);
+  right: var(--space-4);
+  transform: translateY(-50%);
+  z-index: 1100; /* above the vignette overlay */
+
+  margin: 0;
   padding: var(--space-2) var(--space-4);
 
   background: var(--glass-bg-pill);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+
   border: 1px solid var(--glass-border-pill);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-pill);
@@ -252,6 +269,27 @@ h1 {
   color: var(--color-muted);
   font-size: var(--fs-small);
   font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  /* Stack the progress pill below the header so it never overlaps the title */
+  .quiz-header {
+    padding-right: var(--space-3);
+    padding-left: var(--space-3);
+  }
+
+  .progress {
+    top: calc(var(--header-h) + var(--space-2));
+    right: var(--space-2);
+    transform: none;
+    padding: 3px var(--space-3);
+    font-size: 12px;
+  }
+
+  /* Push question content down so the repositioned pill doesn't overlap it */
+  .question {
+    scroll-margin-top: calc(var(--header-h) + var(--space-6));
+  }
 }
 
 
@@ -262,19 +300,19 @@ h1 {
 .question {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
 
   min-height: calc(100vh - var(--header-h));
   padding: var(--space-8);
   margin: var(--space-6) auto;
 
-  background: var(--glass-bg);
+  /* background: var(--glass-bg);
   backdrop-filter: blur(var(--blur-lg));
   -webkit-backdrop-filter: blur(var(--blur-lg));
 
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-container);
+  box-shadow: var(--shadow-container); */
 
   scroll-margin-top: var(--header-h);
 }

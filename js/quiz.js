@@ -151,7 +151,6 @@
     const progress   = document.getElementById("progress");
     const questionsContainer = document.getElementById("questions");
     const learningContainer  = document.getElementById("learning-container");
-
     if (data.meta) {
       if (data.meta.title) {
         titleEl.textContent = data.meta.title;
