@@ -40,14 +40,14 @@
   --blur-sm:               12px;
 
   /* ---------- Tinted state colors ---------- */
-  --success-border:        rgba(34, 164, 71, 0.65);
+  --success-border:        rgba(34, 164, 71, 0);
   --success-bg:            rgba(80, 205, 115, 0.18);
   --success-bg-soft:       rgba(80, 205, 115, 0.12);
   --success-glow:          rgba(80, 205, 115, 0.15);
   --success-edge:          rgba(34, 164, 71, 0.15);
   --success-shadow:        rgba(34, 164, 71, 0.12);
 
-  --danger-border:         rgba(217, 48, 37, 0.65);
+  --danger-border:         rgba(217, 48, 37, 0);
   --danger-bg:             rgba(255, 90, 80, 0.16);
   --danger-bg-soft:        rgba(255, 90, 80, 0.10);
   --danger-glow:           rgba(255, 90, 80, 0.13);
@@ -423,13 +423,16 @@ h1 {
   cursor: default;
 }
 
-.answer.correct {
+/* Tint only the answer the user actually clicked.
+   Correct answers revealed after a wrong click keep the default glass look
+   and rely on the icon alone to indicate correctness. */
+.answer.clicked.correct {
   border-color: var(--success-border);
   background: var(--success-bg);
   box-shadow: var(--shadow-answer-correct);
 }
 
-.answer.wrong {
+.answer.clicked.wrong {
   border-color: var(--danger-border);
   background: var(--danger-bg);
   box-shadow: var(--shadow-answer-wrong);
@@ -444,31 +447,43 @@ h1 {
   display: none;
   flex-shrink: 0;
 
-  width: 27px;
-  height: 27px;
-  margin-top: 1px;
-
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
 
   align-items: center;
   justify-content: center;
 
-  color: #fff;
-  font-size: var(--fs-body);
-  font-weight: var(--fw-bold);
+  /* Material Symbols glyph styling — outline only (FILL 0) */
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
 }
 
 .answer.correct .answer-icon,
 .answer.wrong   .answer-icon {
-  display: flex;
+  display: inline-flex;
 }
 
 .answer.correct .answer-icon {
-  background: linear-gradient(135deg, var(--color-success-light), var(--color-success-strong));
+  color: var(--color-success-strong);
 }
 
 .answer.wrong .answer-icon {
-  background: linear-gradient(135deg, var(--color-danger-light),  var(--color-danger));
+  color: var(--color-danger);
 }
 
 .answer-text {

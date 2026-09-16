@@ -7,8 +7,9 @@
 
   /* ---------- Constants ---------- */
 
-  const ICON_CORRECT    = "\u2713"; // ✓
-  const ICON_WRONG      = "\u2715"; // ✕
+  // Google Material Symbols (Outlined) ligatures
+  const ICON_CORRECT    = "verified_user";
+  const ICON_WRONG      = "gpp_bad";
   const SCROLL_DELAY_MS = 300;
   const LABEL_CORRECT   = "Why this is correct: ";
   const LABEL_WRONG     = "Why this is incorrect: ";
@@ -34,11 +35,15 @@
     }
   };
 
-  const revealCorrectAnswer = (answers) => {
+  // After the user answers, mark every remaining answer:
+  //   - the correct one gets the check_circle icon
+  //   - the incorrect ones get the cancel icon
+  // The button the user actually clicked is skipped (it's already marked).
+  const markRemainingAnswers = (answers, clickedButton) => {
     answers.forEach((answer) => {
-      if (answer.dataset.correct === "true") {
-        markAnswer(answer, "correct");
-      }
+      if (answer === clickedButton) return;
+      const variant = answer.dataset.correct === "true" ? "correct" : "wrong";
+      markAnswer(answer, variant);
     });
   };
 
@@ -208,14 +213,19 @@
           const lessonText =
             (qData && qData.answers[index] && qData.answers[index].lesson) || "";
 
+          // Flag the actual button the user clicked so CSS can tint only that one.
+          answer.classList.add("clicked");
+
           if (isCorrect) {
             markAnswer(answer, "correct");
             renderResultMessage(resultMessage, LABEL_CORRECT, lessonText, "correct");
           } else {
             markAnswer(answer, "wrong");
             renderResultMessage(resultMessage, LABEL_WRONG, lessonText, "wrong");
-            revealCorrectAnswer(answers);
           }
+
+          // Icon-mark every other answer (correct → check_circle, wrong → cancel)
+          markRemainingAnswers(answers, answer);
 
           updateProgress();
 
