@@ -63,10 +63,11 @@
     return button;
   };
 
-  const buildQuestionSection = (question) => {
+  const buildQuestionSection = (question, index, total) => {
     const section = document.createElement("section");
     section.className = "question";
     section.dataset.question = question.id;
+    section.id = `question-${index + 1}`;
 
     const heading = document.createElement("h2");
     heading.textContent = question.text;
@@ -81,6 +82,15 @@
     result.setAttribute("role", "status");
     result.setAttribute("aria-live", "polite");
     section.appendChild(result);
+
+    // "Next question" anchor button (hidden until answered; not shown on last question)
+    if (index < total - 1) {
+      const nextLink = document.createElement("a");
+      nextLink.className = "next-question";
+      nextLink.href = `#question-${index + 2}`;
+      nextLink.textContent = "Next question →";
+      section.appendChild(nextLink);
+    }
 
     return section;
   };
@@ -153,8 +163,10 @@
     }
 
     const questionData = data.questions || [];
-    questionData.forEach((q) => {
-      questionsContainer.appendChild(buildQuestionSection(q));
+    questionData.forEach((q, i) => {
+      questionsContainer.appendChild(
+        buildQuestionSection(q, i, questionData.length)
+      );
     });
 
     if (data.learning) {
